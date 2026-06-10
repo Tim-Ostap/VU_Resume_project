@@ -11,9 +11,20 @@ def scrape_job_description(url):
     clean_text= soup.get_text(separator= " ")
     return clean_text
 
-    #TESTBLOCK
 
-if __name__ == "__main__":
-    sample_url = "https://example.com"
-    result = scrape_job_description(sample_url)
-    print(result)
+
+def word_filter(job_text, target_keywords):
+    found_skills= []
+    lowercase_text= job_text.lower()
+    words_list= lowercase_text.split()
+
+    for keyword in target_keywords:
+        if keyword.lower() in words_list:
+            found_skills.append(keyword)
+
+    return found_skills
+
+
+
+        
+            

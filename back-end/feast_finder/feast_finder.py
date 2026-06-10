@@ -1,8 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
+import string
 
 def scrape_job_description(url):
-    #This is standard requests procedure, masking our script's identity, otherwise it would get blocked as a bot -> tells the server we are a human 
+    #lets the server think we are a human 
     headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
 
     response= requests.get(url, headers=headers)
@@ -14,15 +15,38 @@ def scrape_job_description(url):
 
 
 def word_filter(job_text, target_keywords):
+    
     found_skills= []
+    
     lowercase_text= job_text.lower()
-    words_list= lowercase_text.split()
+    
+    text= lowercase_text
+    
+    new_text= text.translate(str.maketrans('','', string.punctuation))
+    
+    adj_text = " " + new_text + " "
 
     for keyword in target_keywords:
-        if keyword.lower() in words_list:
+        adj_keyword = " " + keyword.lower() + " "
+
+        if adj_keyword in adj_text:
             found_skills.append(keyword)
 
     return found_skills
+
+
+    
+
+
+
+
+
+    
+
+
+
+
+
 
 
 
